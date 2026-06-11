@@ -1,0 +1,32 @@
+import {PriceHistoryEntry} from "@/types/product";
+import {formatPriceWithCommas} from "@/components/helpers/formatting_helpers";
+
+type Props = {
+    productPriceHistory: PriceHistoryEntry[]
+}
+
+export default async function PriceHistoryTable(props: Props) {
+    return (
+        <table className="w-full max-w-2xl border border-header-text border-collapse mb-5">
+            <thead>
+            <tr>
+                <th className="border border-header-text px-4 py-2 text-left">Date</th>
+                <th className="border border-header-text px-4 py-2 text-left">Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            {props.productPriceHistory.map((entry, index) => (
+                <tr key={index}>
+                    <td className="border border-header-text px-4 py-2">{formatDate(entry.timestamp)}</td>
+                    <td className="border border-header-text px-4 py-2">Rs. {formatPriceWithCommas(entry.price)}</td>
+                </tr>
+            ))}
+            </tbody>
+        </table>
+
+    )
+}
+
+function formatDate(timestamp: string | Date) {
+    return new Date(timestamp).toISOString().slice(0, 10);
+}

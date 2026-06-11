@@ -16,7 +16,7 @@ export default function SearchResultCard(props: Props) {
             <div className="flex items-center justify-center text-sm italic">{getDomainFromUrl(props.url)}</div>
             <div className="flex flex-row justify-center gap-2">
                 <InternalLink text={"See more details"} url={`/product?url=${encodeURIComponent(props.url)}`}/>
-                <ExternalLink text={"View on site"} url={props.url}/>
+                <ExternalLink text={`View on ${getDomainFromUrl(props.url)}`} url={props.url}/>
             </div>
         </div>
     )

@@ -2,6 +2,8 @@
 
 import {PriceHistoryEntry, ProductDetails} from "@/types/product";
 import {formatPriceWithCommas, getDomainFromUrl} from "@/components/helpers/formatting_helpers";
+import PriceHistoryTable from "@/components/price-history/PriceHistoryTable";
+import SimilarProductsList from "@/components/similar-products/SimilarProductsList";
 import ExternalLink from "@/components/links/ExternalLink";
 
 type Props = {
@@ -25,41 +27,33 @@ export default async function Product({searchParams}: Props) {
     const productPriceHistory: PriceHistoryEntry[] = await priceHistoryResponse.json();
 
     return (
-        <div className="p-4">
+        <div className="p-4 flex flex-col space-y-10 items-start">
             <h1 className={`text-5xl mb-4 text-header-text`}>
                 <b>{productData.title}</b>
             </h1>
 
-            <div
-                className="rounded-md bg-white flex font-bold w-32 mb-4 p-4 text-gray-700 flex-row items-center justify-center">
-                {getDomainFromUrl(productData.url)}
+            <div className={"flex flex-col items-start space-y-4"}>
+                <div className={`text-3xl flex font-bold mb-4`}>
+                    Rs. {formatPriceWithCommas(productData.price)}
+                </div>
+
+                <ExternalLink text={`View on ${getDomainFromUrl(productData.url)}`} url={productData.url}/>
             </div>
 
 
-            <table className="w-full max-w-2xl border border-header-text border-collapse mb-5">
-                <thead>
-                <tr>
-                    <th className="border border-header-text px-4 py-2 text-left">Date</th>
-                    <th className="border border-header-text px-4 py-2 text-left">Price</th>
-                </tr>
-                </thead>
-                <tbody>
-                {productPriceHistory.map((entry, index) => (
-                    <tr key={index}>
-                        <td className="border border-header-text px-4 py-2">{formatDate(entry.timestamp)}</td>
-                        <td className="border border-header-text px-4 py-2">Rs. {formatPriceWithCommas(entry.price)}</td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
+            <div className="flex flex-col space-y-10">
+                <h2 className={`text-3xl mb-4 text-header-text font-bold`}>Price History</h2>
+                <PriceHistoryTable productPriceHistory={productPriceHistory}/>
+            </div>
 
-            <ExternalLink text={"Visit Site"} url={productData.url}/>
+
+            <div className="flex flex-col space-y-10 w-full">
+                <h2 className={`text-3xl mb-4 text-header-text font-bold`}>Similar Products</h2>
+                <SimilarProductsList product={productData}/>
+            </div>
 
         </div>
     );
 }
 
-function formatDate(timestamp: string | Date) {
-    return new Date(timestamp).toISOString().slice(0, 10);
-}
 
