@@ -1,7 +1,7 @@
 import {SimilarProductEntry} from "@/types/product";
 import {useEffect, useState} from "react";
 
-export default function useSimilarProducts(productUrl: string) {
+export default function useSimilarProducts(productUrl: string, titleSimilarityThreshold: number, cosine_similarity_threshold: number) {
     const [data, setData] = useState<SimilarProductEntry[] | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -11,7 +11,7 @@ export default function useSimilarProducts(productUrl: string) {
             try {
                 console.log(process.env.API_BASE_URL);
                 console.log(process.env.NEXT_PUBLIC_API_BASE_URL);
-                const url = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}/products/similar?url=${productUrl}`);
+                const url = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}/products/similar?url=${productUrl}&title_similarity_threshold=${titleSimilarityThreshold}&cosine_similarity=${cosine_similarity_threshold}`);
 
                 const response = await fetch(url.toString());
                 if (!response.ok) {

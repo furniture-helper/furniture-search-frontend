@@ -3,8 +3,8 @@
 import {PriceHistoryEntry, ProductDetails} from "@/types/product";
 import {formatPriceWithCommas, getDomainFromUrl} from "@/components/helpers/formatting_helpers";
 import PriceHistoryTable from "@/components/price-history/PriceHistoryTable";
-import SimilarProductsList from "@/components/similar-products/SimilarProductsList";
 import ExternalLink from "@/components/links/ExternalLink";
+import SimilarProductsComponent from "@/components/similar-products/SimilarProductsComponent";
 
 type Props = {
     searchParams: Promise<{ url: string }>;
@@ -27,7 +27,7 @@ export default async function Product({searchParams}: Props) {
     const productPriceHistory: PriceHistoryEntry[] = await priceHistoryResponse.json();
 
     return (
-        <div className="p-4 flex flex-col space-y-10 items-start">
+        <div className="p-4 flex flex-col space-y-10 items-start w-full">
             <h1 className={`text-5xl mb-4 text-header-text`}>
                 <b>{productData.title}</b>
             </h1>
@@ -47,10 +47,7 @@ export default async function Product({searchParams}: Props) {
             </div>
 
 
-            <div className="flex flex-col space-y-10 w-full">
-                <h2 className={`text-3xl mb-4 text-header-text font-bold`}>Similar Products</h2>
-                <SimilarProductsList product={productData}/>
-            </div>
+            <SimilarProductsComponent product={productData}/>
 
         </div>
     );

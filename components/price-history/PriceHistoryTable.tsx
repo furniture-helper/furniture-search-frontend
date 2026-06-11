@@ -7,7 +7,7 @@ type Props = {
 
 export default async function PriceHistoryTable(props: Props) {
     return (
-        <table className="w-full max-w-2xl border border-header-text border-collapse mb-5">
+        <table className="w-full border border-header-text border-collapse mb-5">
             <thead>
             <tr>
                 <th className="border border-header-text px-4 py-2 text-left">Date</th>

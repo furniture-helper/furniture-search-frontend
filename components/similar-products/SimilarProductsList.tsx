@@ -8,10 +8,12 @@ import InternalLink from "@/components/links/InternalLink";
 
 type Props = {
     product: ProductDetails
+    title_similarityThreshold: number
+    cosine_similarity_threshold: number
 }
 
 export default function SimilarProductsList(props: Props) {
-    const {data, loading, error} = useSimilarProducts(props.product.url);
+    const {data, loading, error} = useSimilarProducts(props.product.url, 0.5, 0.5);
 
     if (loading) {
         return (<div>Loading similar products...</div>);
@@ -24,7 +26,7 @@ export default function SimilarProductsList(props: Props) {
     if (data && data.length > 0) {
 
         return (
-            <table className="w-full max-w-4xl border border-header-text border-collapse mb-5">
+            <table className="w-full border border-header-text border-collapse mb-5">
                 <thead>
                 <tr>
                     <th className="border border-header-text px-4 py-2 text-left">Site</th>
@@ -40,23 +42,27 @@ export default function SimilarProductsList(props: Props) {
                 </thead>
                 <tbody>
                 {data.map((entry, index) => (
-                    <tr key={index}>
-                        <td className="border border-header-text px-4 py-2">{getDomainFromUrl(entry.product.url)}</td>
-                        <td className="border border-header-text px-4 py-2">{entry.product.title}</td>
-                        <td className="border border-header-text px-4 py-2">Rs. {formatPriceWithCommas(entry.product.price)}</td>
-                        <td className="border border-header-text px-4 py-2">{formatPriceWithCommas(getPriceDifference(props.product.price, entry.product.price).toString())}</td>
-                        <td className="border border-header-text px-4 py-2">{(+entry.title_similarity).toFixed(2)}</td>
-                        <td className="border border-header-text px-4 py-2">{(+entry.cosine_similarity).toFixed(2)}</td>
-                        <td className="border border-header-text px-4 py-2">{(+entry.combined_similarity).toFixed(2)}</td>
-                        <td className="border border-header-text px-4 py-2">
-                            <InternalLink text={`More details`}
-                                          url={`/product?url=${encodeURIComponent(entry.product.url)}`}/>
-                        </td>
-                        <td className="border border-header-text px-4 py-2">
-                            <ExternalLink text={`View on ${getDomainFromUrl(entry.product.url)}`}
-                                          url={entry.product.url}/>
-                        </td>
-                    </tr>
+                    entry.title_similarity >= props.title_similarityThreshold &&
+                    entry.cosine_similarity >= props.cosine_similarity_threshold &&
+                    (
+                        <tr key={index}>
+                            <td className="border border-header-text px-4 py-2">{getDomainFromUrl(entry.product.url)}</td>
+                            <td className="border border-header-text px-4 py-2">{entry.product.title}</td>
+                            <td className="border border-header-text px-4 py-2">Rs. {formatPriceWithCommas(entry.product.price)}</td>
+                            <td className="border border-header-text px-4 py-2">{formatPriceWithCommas(getPriceDifference(props.product.price, entry.product.price).toString())}</td>
+                            <td className="border border-header-text px-4 py-2">{(+entry.title_similarity).toFixed(2)}</td>
+                            <td className="border border-header-text px-4 py-2">{(+entry.cosine_similarity).toFixed(2)}</td>
+                            <td className="border border-header-text px-4 py-2">{(+entry.combined_similarity).toFixed(2)}</td>
+                            <td className="border border-header-text px-4 py-2">
+                                <InternalLink text={`More details`}
+                                              url={`/product?url=${encodeURIComponent(entry.product.url)}`}/>
+                            </td>
+                            <td className="border border-header-text px-4 py-2">
+                                <ExternalLink text={`View on ${getDomainFromUrl(entry.product.url)}`}
+                                              url={entry.product.url}/>
+                            </td>
+                        </tr>
+                    )
                 ))}
                 </tbody>
             </table>
