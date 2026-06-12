@@ -19,7 +19,16 @@ export default function PriceHistoryChart(props: Props) {
     console.log(data)
 
     return (
-        <LineChart style={{width: '100%', aspectRatio: 2}} responsive data={data}>
+        <LineChart style={{
+            width: '100%',
+            aspectRatio: 2,
+            backgroundColor: 'rgba(255,255,255, 0.25)',
+            padding: '10px',
+            borderRadius: '10px'
+        }}
+                   responsive data={data}
+
+        >
             <Line dataKey="price" strokeWidth={2} stroke="brown"/>
             <YAxis width="auto" label={{value: 'Price', position: 'insideLeft', angle: -90}}
                    tickFormatter={(price) => `Rs. ${price.toLocaleString()}`}

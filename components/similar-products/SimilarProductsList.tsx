@@ -26,7 +26,7 @@ export default function SimilarProductsList(props: Props) {
     if (data && data.length > 0) {
 
         return (
-            <table className="w-full border border-header-text border-collapse mb-5">
+            <table className="w-full border border-header-text border-collapse mb-5 bg-[rgba(255,255,255,0.25)]">
                 <thead>
                 <tr className={`bg-header-text text-white`}>
                     <th className="border border-header-text px-4 py-2 text-left">Site</th>
