@@ -25,6 +25,19 @@ export default async function Product({searchParams}: Props) {
         cache: "no-store",
     });
     const productPriceHistory: PriceHistoryEntry[] = await priceHistoryResponse.json();
+    const realPriceHistory: PriceHistoryEntry[] = []
+    const seenDates: string[] = []
+    const today = new Date();
+    const thirty_days_ago: Date = new Date(new Date().setDate(today.getDate() - 30));
+
+    for (const priceHistoryEntry of productPriceHistory) {
+        const dateObj = new Date(priceHistoryEntry.timestamp)
+        const date = dateObj.toISOString().slice(0, 10);
+        if (!seenDates.includes(date) && dateObj >= thirty_days_ago) {
+            realPriceHistory.push(priceHistoryEntry);
+            seenDates.push(date);
+        }
+    }
 
     return (
         <div className="p-4 flex flex-col space-y-10 items-start w-full">
@@ -42,8 +55,8 @@ export default async function Product({searchParams}: Props) {
 
 
             <div className="flex flex-col space-y-10">
-                <h2 className={`text-3xl mb-4 text-header-text font-bold`}>Price History</h2>
-                <PriceHistoryTable productPriceHistory={productPriceHistory}/>
+                <h2 className={`text-3xl mb-4 text-header-text font-bold`}>Price History (last 30 days)</h2>
+                <PriceHistoryTable productPriceHistory={realPriceHistory}/>
             </div>
 
 
