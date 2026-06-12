@@ -5,6 +5,7 @@ import {formatPriceWithCommas, getDomainFromUrl} from "@/components/helpers/form
 import PriceHistoryTable from "@/components/price-history/PriceHistoryTable";
 import ExternalLink from "@/components/links/ExternalLink";
 import SimilarProductsComponent from "@/components/similar-products/SimilarProductsComponent";
+import PriceHistoryChart from "@/components/price-history/PriceHistoryChart";
 
 type Props = {
     searchParams: Promise<{ url: string }>;
@@ -53,10 +54,14 @@ export default async function Product({searchParams}: Props) {
                 <ExternalLink text={`View on ${getDomainFromUrl(productData.url)}`} url={productData.url}/>
             </div>
 
-
-            <div className="flex flex-col space-y-10">
+            <div className="flex flex-col space-y-10 w-full">
                 <h2 className={`text-3xl mb-4 text-header-text font-bold`}>Price History (last 30 days)</h2>
-                <PriceHistoryTable productPriceHistory={realPriceHistory}/>
+                <div className={"flex flex-row items-start gap-8"}>
+                    <div className={`flex max-w-sm w-full`}>
+                        <PriceHistoryTable productPriceHistory={realPriceHistory}/>
+                    </div>
+                    <PriceHistoryChart productPriceHistory={productPriceHistory}/>
+                </div>
             </div>
 
 
