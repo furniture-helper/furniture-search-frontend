@@ -29,7 +29,7 @@ export default function SimilarProductsList(props: Props) {
             <table className="w-full border border-header-text border-collapse mb-5">
                 <thead>
                 <tr className={`bg-header-text text-white`}>
-                    <th className="border border-primary px-4 py-2 text-left">Site</th>
+                    <th className="border border-header-text px-4 py-2 text-left">Site</th>
                     <th className="border border-header-text px-4 py-2 text-left">Title</th>
                     <th className="border border-header-text px-4 py-2 text-left">Price</th>
                     <th className="border border-header-text px-4 py-2 text-left">Price Diff</th>
