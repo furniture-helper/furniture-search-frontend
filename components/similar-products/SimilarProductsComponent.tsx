@@ -11,6 +11,7 @@ type Props = {
 export default function SimilarProductsComponent(props: Props) {
     const [titleSimilarityThreshold, setTitleSimilarityThreshold] = useState(0.5);
     const [cosineSimilarityThreshold, setCosineSimilarityThreshold] = useState(0.5);
+    const [limitOne, setLimitOne] = useState(true);
 
     return (
         <div className="flex flex-col space-y-4 w-full">
@@ -37,11 +38,21 @@ export default function SimilarProductsComponent(props: Props) {
                            onChange={(e) => setCosineSimilarityThreshold(parseFloat(e.target.value))}
                            step="0.01"></input>
                 </div>
+
+                <div className="flex flex-col space-y-2">
+                    <div>Limit 1 per site?</div>
+                    <input type="checkbox" id="limit" name="limit"
+                           className={"flex accent-primary"}
+                           checked={limitOne}
+                           onChange={(e) => setLimitOne(e.target.checked)}
+                    ></input>
+                </div>
+
             </div>
 
 
             <SimilarProductsList product={props.product} title_similarityThreshold={titleSimilarityThreshold}
-                                 cosine_similarity_threshold={cosineSimilarityThreshold}/>
+                                 cosine_similarity_threshold={cosineSimilarityThreshold} limitOne={limitOne}/>
         </div>
 
     )

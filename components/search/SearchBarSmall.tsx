@@ -1,5 +1,5 @@
 import {Input} from "../ui/input";
-import {Button} from "@/components/ui/button";
+import {Button} from "@/components/ui/buttons/button";
 import React from "react";
 
 type Props = {

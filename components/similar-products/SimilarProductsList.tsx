@@ -2,14 +2,17 @@
 
 import {formatPriceWithCommas, getDomainFromUrl} from "@/components/helpers/formatting_helpers";
 import useSimilarProducts from "@/hooks/useSimilarProductsHook";
-import {ProductDetails} from "@/types/product";
+import {ProductDetails, SimilarProductEntry} from "@/types/product";
 import ExternalLink from "@/components/links/ExternalLink";
 import InternalLink from "@/components/links/InternalLink";
+import MarkTrueButton from "@/components/ui/buttons/mark-buttons/MarkTrueButton";
+import MarkFalseButton from "@/components/ui/buttons/mark-buttons/MarkFalseButton";
 
 type Props = {
     product: ProductDetails
     title_similarityThreshold: number
     cosine_similarity_threshold: number
+    limitOne: boolean
 }
 
 export default function SimilarProductsList(props: Props) {
@@ -25,6 +28,16 @@ export default function SimilarProductsList(props: Props) {
 
     if (data && data.length > 0) {
 
+        const filteredProducts: SimilarProductEntry[] = [];
+        const collectedDomains: Set<string> = new Set();
+        for (const product of data) {
+            if (product.title_similarity < props.title_similarityThreshold) continue;
+            if (product.cosine_similarity < props.cosine_similarity_threshold) continue;
+            if (props.limitOne && collectedDomains.has(getDomainFromUrl(product.product.url)) && props.limitOne) continue;
+            filteredProducts.push(product);
+            collectedDomains.add(getDomainFromUrl(product.product.url));
+        }
+
         return (
             <table className="w-full border border-header-text border-collapse mb-5 bg-[rgba(255,255,255,0.25)]">
                 <thead>
@@ -38,13 +51,11 @@ export default function SimilarProductsList(props: Props) {
                     <th className="border border-header-text px-4 py-2 text-left">Combined Similarity</th>
                     <th className="border border-header-text px-4 py-2 text-left"></th>
                     <th className="border border-header-text px-4 py-2 text-left"></th>
+                    <th className="border border-header-text px-4 py-2 text-left"></th>
                 </tr>
                 </thead>
                 <tbody>
-                {data.map((entry, index) => (
-                    entry.title_similarity >= props.title_similarityThreshold &&
-                    entry.cosine_similarity >= props.cosine_similarity_threshold &&
-                    (
+                {filteredProducts.map((entry, index) => (
                         <tr key={index}>
                             <td className="border border-header-text px-4 py-2">{getDomainFromUrl(entry.product.url)}</td>
                             <td className="border border-header-text px-4 py-2">{entry.product.title}</td>
@@ -61,9 +72,15 @@ export default function SimilarProductsList(props: Props) {
                                 <ExternalLink text={`View on ${getDomainFromUrl(entry.product.url)}`}
                                               url={entry.product.url}/>
                             </td>
+                            <td className="border border-header-text px-4 py-2">
+                                <div className={"flex flex-row gap-2"}>
+                                    <MarkTrueButton url1={props.product.url} url2={entry.product.url}/>
+                                    <MarkFalseButton url1={props.product.url} url2={entry.product.url}/>
+                                </div>
+                            </td>
                         </tr>
                     )
-                ))}
+                )}
                 </tbody>
             </table>
         )
