@@ -11,7 +11,7 @@ type Props = {
 export default function SimilarProductsComponent(props: Props) {
     const [titleSimilarityThreshold, setTitleSimilarityThreshold] = useState(0.5);
     const [cosineSimilarityThreshold, setCosineSimilarityThreshold] = useState(0.5);
-    const [limitOne, setLimitOne] = useState(true);
+    const [limitOne, setLimitOne] = useState(false);
 
     return (
         <div className="flex flex-col space-y-4 w-full">
