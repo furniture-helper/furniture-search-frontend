@@ -16,7 +16,7 @@ type Props = {
 }
 
 export default function SimilarProductsList(props: Props) {
-    const {data, loading, error} = useSimilarProducts(props.product.url, 0.5, 0.5);
+    const {data, loading, error} = useSimilarProducts(props.product.url, 0.3, 0.3);
 
     if (loading) {
         return (<div>Loading similar products...</div>);
