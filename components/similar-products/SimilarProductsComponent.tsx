@@ -9,8 +9,8 @@ type Props = {
 }
 
 export default function SimilarProductsComponent(props: Props) {
-    const [titleSimilarityThreshold, setTitleSimilarityThreshold] = useState(0.5);
-    const [cosineSimilarityThreshold, setCosineSimilarityThreshold] = useState(0.5);
+    const [titleSimilarityThreshold, setTitleSimilarityThreshold] = useState(0.3);
+    const [cosineSimilarityThreshold, setCosineSimilarityThreshold] = useState(0.3);
     const [limitOne, setLimitOne] = useState(false);
 
     return (
