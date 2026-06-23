@@ -47,7 +47,10 @@ export default function SimilarProductsList(props: Props) {
                     <th className="border border-header-text px-4 py-2 text-left">Price</th>
                     <th className="border border-header-text px-4 py-2 text-left">Price Diff</th>
                     <th className="border border-header-text px-4 py-2 text-left">Title Similarity</th>
-                    <th className="border border-header-text px-4 py-2 text-left">Cosine Similarity</th>
+                    <th className="border border-header-text px-4 py-2 text-left">768</th>
+                    <th className="border border-header-text px-4 py-2 text-left">256</th>
+                    <th className="border border-header-text px-4 py-2 text-left">Title</th>
+                    <th className="border border-header-text px-4 py-2 text-left">1024</th>
                     <th className="border border-header-text px-4 py-2 text-left">Combined Similarity</th>
                     <th className="border border-header-text px-4 py-2 text-left"></th>
                     <th className="border border-header-text px-4 py-2 text-left"></th>
@@ -63,6 +66,9 @@ export default function SimilarProductsList(props: Props) {
                             <td className="border border-header-text px-4 py-2">{formatPriceWithCommas(getPriceDifference(props.product.price, entry.product.price).toString())}</td>
                             <td className="border border-header-text px-4 py-2">{(+entry.title_similarity).toFixed(2)}</td>
                             <td className="border border-header-text px-4 py-2">{(+entry.cosine_similarity).toFixed(2)}</td>
+                            <td className="border border-header-text px-4 py-2">{(+entry.cosine_similarity_256).toFixed(2)}</td>
+                            <td className="border border-header-text px-4 py-2">{(+entry.cosine_similarity_title_256).toFixed(2)}</td>
+                            <td className="border border-header-text px-4 py-2">{(+entry.cosine_similarity_1024).toFixed(2)}</td>
                             <td className="border border-header-text px-4 py-2">{(+entry.combined_similarity).toFixed(2)}</td>
                             <td className="border border-header-text px-4 py-2">
                                 <InternalLink text={`More details`}
