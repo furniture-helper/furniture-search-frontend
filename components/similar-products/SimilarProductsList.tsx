@@ -32,7 +32,7 @@ export default function SimilarProductsList(props: Props) {
         const collectedDomains: Set<string> = new Set();
         for (const product of data) {
             if (product.title_similarity < props.title_similarityThreshold) continue;
-            if (product.cosine_similarity < props.cosine_similarity_threshold) continue;
+            if (product.cosine_similarity_finetuned_768 < props.cosine_similarity_threshold) continue;
             if (props.limitOne && collectedDomains.has(getDomainFromUrl(product.product.url)) && props.limitOne) continue;
             filteredProducts.push(product);
             collectedDomains.add(getDomainFromUrl(product.product.url));
@@ -48,9 +48,7 @@ export default function SimilarProductsList(props: Props) {
                     <th className="border border-header-text px-4 py-2 text-left">Price Diff</th>
                     <th className="border border-header-text px-4 py-2 text-left">Title Similarity</th>
                     <th className="border border-header-text px-4 py-2 text-left">768</th>
-                    <th className="border border-header-text px-4 py-2 text-left">256</th>
-                    <th className="border border-header-text px-4 py-2 text-left">Title</th>
-                    <th className="border border-header-text px-4 py-2 text-left">1024</th>
+                    <th className="border border-header-text px-4 py-2 text-left">Finetuned 768</th>
                     <th className="border border-header-text px-4 py-2 text-left">Combined Similarity</th>
                     <th className="border border-header-text px-4 py-2 text-left"></th>
                     <th className="border border-header-text px-4 py-2 text-left"></th>
@@ -66,9 +64,7 @@ export default function SimilarProductsList(props: Props) {
                             <td className="border border-header-text px-4 py-2">{formatPriceWithCommas(getPriceDifference(props.product.price, entry.product.price).toString())}</td>
                             <td className="border border-header-text px-4 py-2">{(+entry.title_similarity).toFixed(2)}</td>
                             <td className="border border-header-text px-4 py-2">{(+entry.cosine_similarity).toFixed(2)}</td>
-                            <td className="border border-header-text px-4 py-2">{(+entry.cosine_similarity_256).toFixed(2)}</td>
-                            <td className="border border-header-text px-4 py-2">{(+entry.cosine_similarity_title_256).toFixed(2)}</td>
-                            <td className="border border-header-text px-4 py-2">{(+entry.cosine_similarity_1024).toFixed(2)}</td>
+                            <td className="border border-header-text px-4 py-2">{(+entry.cosine_similarity_finetuned_768).toFixed(2)}</td>
                             <td className="border border-header-text px-4 py-2">{(+entry.combined_similarity).toFixed(2)}</td>
                             <td className="border border-header-text px-4 py-2">
                                 <InternalLink text={`More details`}

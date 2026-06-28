@@ -14,7 +14,5 @@ export type SimilarProductEntry = {
     title_similarity: number;
     cosine_similarity: number;
     combined_similarity: number;
-    cosine_similarity_256: number;
-    cosine_similarity_title_256: number;
-    cosine_similarity_1024: number;
+    cosine_similarity_finetuned_768: number;
 }

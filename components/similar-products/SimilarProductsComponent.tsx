@@ -10,7 +10,7 @@ type Props = {
 
 export default function SimilarProductsComponent(props: Props) {
     const [titleSimilarityThreshold, setTitleSimilarityThreshold] = useState(0.3);
-    const [cosineSimilarityThreshold, setCosineSimilarityThreshold] = useState(0.3);
+    const [cosineSimilarityThreshold, setCosineSimilarityThreshold] = useState(0.7);
     const [limitOne, setLimitOne] = useState(true);
 
     return (
@@ -21,7 +21,7 @@ export default function SimilarProductsComponent(props: Props) {
 
                 <div className="flex flex-col space-y-2">
                     <div>Title Similarity Threshold: <b>{titleSimilarityThreshold.toFixed(2)}</b></div>
-                    <input type="range" id="title_similiarity_threshold" name="title_similiarity_threshold" min="0.5"
+                    <input type="range" id="title_similiarity_threshold" name="title_similiarity_threshold" min="0.3"
                            max="1"
                            className={"flex accent-primary"}
                            value={titleSimilarityThreshold}
@@ -31,7 +31,7 @@ export default function SimilarProductsComponent(props: Props) {
 
                 <div className="flex flex-col space-y-2">
                     <div>Cosine Similarity Threshold: <b>{cosineSimilarityThreshold.toFixed(2)}</b></div>
-                    <input type="range" id="cosine_similarity_threshold" name="cosine_similarity_threshold" min="0.5"
+                    <input type="range" id="cosine_similarity_threshold" name="cosine_similarity_threshold" min="0.3"
                            max="1"
                            className={"flex accent-primary"}
                            value={cosineSimilarityThreshold}
