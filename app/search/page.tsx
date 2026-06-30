@@ -34,7 +34,8 @@ export default async function SearchResults({searchParams}: Props) {
                 <div className="space-y-5">
                     {results.map((result, index) => (
                         <div key={result.url ?? index}>
-                            <SearchResultCard url={result.url} title={result.title} price={result.price}/>
+                            <SearchResultCard url={result.url} title={result.title} price={result.price}
+                                              image_url={result.image_url}/>
                         </div>
                     ))}
                 </div>
