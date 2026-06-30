@@ -2,6 +2,7 @@ export type ProductDetails = {
     url: string;
     title: string;
     price: string;
+    image_url: string | null;
 }
 
 export type PriceHistoryEntry = {

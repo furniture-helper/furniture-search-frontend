@@ -7,6 +7,8 @@ import ExternalLink from "@/components/links/ExternalLink";
 import InternalLink from "@/components/links/InternalLink";
 import MarkTrueButton from "@/components/ui/buttons/mark-buttons/MarkTrueButton";
 import MarkFalseButton from "@/components/ui/buttons/mark-buttons/MarkFalseButton";
+import Image from "next/image";
+import {sanitizeProductImageUrl} from "@/components/helpers/product_helpers";
 
 type Props = {
     product: ProductDetails
@@ -59,7 +61,20 @@ export default function SimilarProductsList(props: Props) {
                 {filteredProducts.map((entry, index) => (
                         <tr key={index}>
                             <td className="border border-header-text px-4 py-2">{getDomainFromUrl(entry.product.url)}</td>
-                            <td className="border border-header-text px-4 py-2">{entry.product.title}</td>
+                            <td className="border border-header-text px-4 py-2">
+                                <div className="flex flex-row items-center gap-4">
+                                    <Image
+                                        src={sanitizeProductImageUrl(entry.product.image_url) || '/assets/no_image_available.jpg'}
+                                        alt={entry.product.title}
+                                        width={100} height={100}
+                                        className="object-contain mb-4 rounded-lg"
+                                    />
+                                    <div className="p-4">
+                                        {entry.product.title}
+                                    </div>
+                                </div>
+
+                            </td>
                             <td className="border border-header-text px-4 py-2">Rs. {formatPriceWithCommas(entry.product.price)}</td>
                             <td className="border border-header-text px-4 py-2">{formatPriceWithCommas(getPriceDifference(props.product.price, entry.product.price).toString())}</td>
                             <td className="border border-header-text px-4 py-2">{(+entry.title_similarity).toFixed(2)}</td>
