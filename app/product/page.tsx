@@ -54,7 +54,7 @@ export default async function Product({searchParams}: Props) {
                 />
 
                 <div className={`flex flex-col w-full p-4`}>
-                    <h1 className={`text-5xl mb-4 text-header-text max-w-[500px] leading-tight`}>
+                    <h1 className={`text-5xl mb-4 text-header-text leading-tight`}>
                         <b>{productData.title}</b>
                     </h1>
 
